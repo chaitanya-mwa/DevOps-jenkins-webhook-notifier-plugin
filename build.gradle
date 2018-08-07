@@ -1,0 +1,35 @@
+plugins {
+  id 'java'
+  id 'org.jenkins-ci.jpi' version '0.27.0'
+}
+
+group = 'org.kaorimatz.jenkins.plugins'
+version = '0.1.0-SNAPSHOT'
+description = 'A Jenkins plugin to send build events to webhooks'
+
+sourceCompatibility = 1.8
+
+dependencies {
+  jenkinsPlugins 'org.jenkins-ci.plugins:apache-httpcomponents-client-4-api:4.5.5-3.0'
+}
+
+jenkinsPlugin {
+  coreVersion = '2.60.3'
+  shortName = 'webhook-notifier'
+  displayName = 'Webhook Notifier Plugin'
+  gitHubUrl = 'https://github.com/kaorimatz/jenkins-webhook-notifier-plugin'
+  developers {
+    developer {
+      id 'kaorimatz'
+      name 'Satoshi Matsumoto'
+      email 'kaorimatz@gmail.com'
+    }
+  }
+  licenses {
+    license {
+      name 'MIT License'
+      url 'https://opensource.org/licenses/MIT'
+      distribution 'repo'
+    }
+  }
+}

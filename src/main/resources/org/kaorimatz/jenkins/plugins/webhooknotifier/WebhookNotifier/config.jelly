@@ -1,0 +1,65 @@
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+    <f:entry title="${%Webhooks}">
+        <f:repeatable field="webhooks">
+            <table width="100%">
+                <f:entry title="${%URL}" field="url">
+                    <f:textbox clazz="required"/>
+                </f:entry>
+                <f:entry title="${%Content type}" field="format">
+                    <f:enum default="APPLICATION_JSON">${it.mimeType}</f:enum>
+                </f:entry>
+                <f:advanced>
+                    <f:entry title="${%Connect timeout} (${%ms})" field="connectTimeout">
+                        <f:number/>
+                    </f:entry>
+                    <f:entry title="${%Socket timeout} (${%ms})" field="socketTimeout">
+                        <f:number/>
+                    </f:entry>
+                    <f:entry title="${%Proxy configuration}">
+                        <f:radioBlock name="proxyConfigurationSource"
+                                      value="NONE"
+                                      title="${%No proxy}"
+                                      checked="${instance == null || instance.proxyConfigurationSource.name() == 'NONE'}"
+                                      inline="true"/>
+                        <f:radioBlock name="proxyConfigurationSource"
+                                      value="SYSTEM"
+                                      title="${%Use system proxy settings}"
+                                      checked="${instance.proxyConfigurationSource.name() == 'SYSTEM'}"
+                                      inline="true"/>
+                        <f:radioBlock name="proxyConfigurationSource"
+                                      value="JENKINS"
+                                      title="${%Use Jenkins proxy settings}"
+                                      checked="${instance.proxyConfigurationSource.name() == 'JENKINS'}"
+                                      inline="true"/>
+                        <f:radioBlock name="proxyConfigurationSource"
+                                      value="MANUAL"
+                                      title="${%Manual proxy settings}"
+                                      checked="${instance.proxyConfigurationSource.name() == 'MANUAL'}"
+                                      inline="true">
+                            <f:entry title="${%Host}" field="proxyHost">
+                                <f:textbox/>
+                            </f:entry>
+                            <f:entry title="${%Port}" field="proxyPort">
+                                <f:number min="0" max="65535"/>
+                            </f:entry>
+                            <f:entry title="${%Username}" field="proxyUsername">
+                                <f:textbox/>
+                            </f:entry>
+                            <f:entry title="${%Password}" field="proxyPassword">
+                                <f:password/>
+                            </f:entry>
+                        </f:radioBlock>
+                    </f:entry>
+                </f:advanced>
+                <f:validateButton method="test"
+                                  title="${%Test}"
+                                  with="url,format,connectTimeout,socketTimeout,proxyConfigurationSource,proxyHost,proxyPort,proxyUsername,proxyPassword"/>
+                <f:entry title="">
+                    <div align="right">
+                        <f:repeatableDeleteButton/>
+                    </div>
+                </f:entry>
+            </table>
+        </f:repeatable>
+    </f:entry>
+</j:jelly>
